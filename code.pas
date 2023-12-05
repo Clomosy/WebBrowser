@@ -101,7 +101,7 @@ Begin
   xWeb.Navigate('clomosy.com');
   
   HSBImg := MyForm.AddNewProImage(HSB,'HSBImg');
-  clComponent.SetupComponent(HSBImg,'{"Align" : "None","Width":40,"Height":"670","ImgUrl":"https://img.icons8.com/color/48/double-left--v2.png", "ImgFit":"yes"}');
+  clComponent.SetupComponent(HSBImg,'{"Align" : "None","Width":40,"Height":"670","ImgUrl":"https://clomosy.com/demos/back2arrow.png", "ImgFit":"yes"}');
   HSBImg.Position.X:= TForm(MyForm).ClientWidth-38;
   HSBImg.Position.Y:=40;
   
@@ -113,11 +113,11 @@ Begin
   VSB.Align := alClient;
 
   GoBackPageBtn := MyForm.AddNewProButton(topBar,'GoBackPageBtn','');
-  clComponent.SetupComponent(GoBackPageBtn,'{"Align" : "Left","Height":40,"Width":40,"ImgUrl":"https://img.icons8.com/fluency/48/circled-left.png","ImgFit":"yes"}');
+  clComponent.SetupComponent(GoBackPageBtn,'{"Align" : "Left","Height":40,"Width":40,"ImgUrl":"https://clomosy.com/demos/XoXback.png","ImgFit":"yes"}');
   MyForm.AddNewEvent(GoBackPageBtn,tbeOnClick,'GoBack');
   
   GoForwardPageBtn := MyForm.AddNewProButton(topBar,'GoForwardPageBtn','');
-  clComponent.SetupComponent(GoForwardPageBtn,'{"Align" : "Right","Height":40,"Width":40,"ImgUrl":"https://img.icons8.com/fluency/48/circled-right.png","ImgFit":"yes"}');
+  clComponent.SetupComponent(GoForwardPageBtn,'{"Align" : "Right","Height":40,"Width":40,"ImgUrl":"https://clomosy.com/demos/RightCircle.png","ImgFit":"yes"}');
   MyForm.AddNewEvent(GoForwardPageBtn,tbeOnClick,'GoForward');
   
   UrlEdt := MyForm.AddNewProEdit(VSB,'UrlEdt','clomosy.com');
