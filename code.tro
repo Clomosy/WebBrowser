@@ -8,6 +8,78 @@ Var
   HSBImg : TClProImage;
   SearchPnl : TclProPanel;
   ColorLyt : TclLayout;
+  GetTimer: TClTimer;
+  MyLyt : TclLayout;
+  googleurl:String;
+  googleurl2:String;
+  pos: integer;
+ void KeyUp
+ { //ShowMessage(MyForm.clSenderKey);
+ 
+ 
+   if(MyForm.clSenderKey == 13){
+
+    if not(topBar.Text == ''){
+       //xWeb.Navigate('https://'+topBar.Text)
+     googleurl=topBar.Text;// Girilen metnin URL olup olmadığını kontrol edin
+     
+     
+     pos = Pos('.', googleurl);
+    if (pos>0) {
+    // URL ise, tarayıcıda açın
+   xWeb.Navigate('https://'+googleurl);
+   topBar.Visible=false;
+   topBar.Visible=true;
+   
+   
+    
+  
+    
+  } else {
+    // URL değilse, Google'da arama yapın
+     xWeb.Navigate('https://www.google.com/search?q='+googleurl);
+       topBar.SetFocus;
+     topBar.Visible =false;
+      topBar.Visible =true;
+   
+     
+  }
+    
+    
+      
+      
+    }
+    
+    //UrlEdt.SetFocus;
+     //UrlEdt.Visible =false;
+    //  UrlEdt.Visible =true;
+    
+   
+  }
+  
+  
+ 
+
+
+
+  
+  
+  
+  
+  
+  
+ }
+
+
+ void LeftClick
+ {
+   topBar.AutoSelect = True;
+ }
+ 
+ 
+ 
+ 
+ 
   
   void VirtualKeyboardHidden 
   {
@@ -41,8 +113,8 @@ Var
   
   void Docs
   {
-  xWeb.Navigate('docs.clomosy.com');
-  topBar.Text = 'docs.clomosy.com' ;
+  xWeb.Navigate('https://www.docs.clomosy.com/');
+  topBar.Text = 'www.docs.clomosy.com' ;
   }
   
   void GoBack
@@ -59,9 +131,28 @@ Var
   
   void GoPage
   {
-  xWeb.Navigate(UrlEdt.Text);
-  topBar.Text = UrlEdt.Text ;
+    if not(UrlEdt.Text == ''){
+        if not(UrlEdt.Text == ''){
+       //xWeb.Navigate('https://'+topBar.Text)
+     googleurl2=UrlEdt.Text;// Girilen metnin URL olup olmadığını kontrol edin
+    
+     
+     pos = Pos('.', googleurl2);
+    if (pos>0) {
+    // URL ise, tarayıcıda açın
+   xWeb.Navigate('https://'+googleurl2);
+   topBar.Text=UrlEdt.Text;
+   
+    
+  } else {
+    // URL değilse, Google'da arama yapın
+     xWeb.Navigate('https://www.google.com/search?q='+googleurl2);
+     topBar.Text=UrlEdt.Text;
+    }}
+    }
   }
+    
+    
   
   void BlackBg
   {
@@ -85,20 +176,29 @@ Var
   
 {
   MyForm = TCLForm.Create(Self);
-  ShowMessage('Mavi sol yön işaretini sola kaydırarak istediğiniz web sitesine gidebilirsiniz');
+  //ShowMessage('Mavi sol yön işaretini sola kaydırarak istediğiniz web sitesine gidebilirsiniz');
   
   HSB = MyForm.AddNewHorzScrollBox(MyForm,'HSB');
   HSB.Align = alClient;
   
   topBar = MyForm.AddNewProEdit(HSB,'topBar','clomosy.com');
+   
   clComponent.SetupComponent(topBar,'{"Align" : "Top","Width" :20, "Height":45,"RoundHeight":10,"RoundWidth":10,"BorderColor":"#000000",
   "BorderWidth":2}');
-  topBar.ReadOnly = True;
+  topBar.ReadOnly = false;
+  
+
+ 
+    MyLyt = MyForm.AddNewLayout(MyForm,'MyLyt');
+   MyLyt.Align = alClient;
+
+ 
+ 
   
   xWeb= MyForm.AddNewWebBrowser(HSB,'xWeb');  
   xWeb.Align = alLeft;
   xWeb.Width = TForm(MyForm).ClientWidth-40;
-  xWeb.Navigate('clomosy.com');
+  xWeb.Navigate('https://clomosy.com');
   
   HSBImg = MyForm.AddNewProImage(HSB,'HSBImg');
   clComponent.SetupComponent(HSBImg,'{"Align" : "None","Width":40,"Height":"670","ImgUrl":"https://clomosy.com/demos/back2arrow.png", "ImgFit":"yes"}');
@@ -126,6 +226,10 @@ Var
   GoBtn = MyForm.AddNewProButton(VSB,'GoBtn','Sayfaya Git');
   clComponent.SetupComponent(GoBtn,'{"Align" : "MostTop","Height":'+IntToStr((SearchPnl.Height/2)/6)+',"Width":'+IntToStr(SearchPnl.Width)+',"RoundWidth":10,"RoundHeight":10,"BackGroundColor":"#369c64","TextColor":"FFFFFF","TextSize":20,"TextBold":"yes","MarginTop":5}');
   MyForm.AddNewEvent(GoBtn,tbeOnClick,'GoPage');
+  MyForm.AddNewEvent(MyForm, tbeOnKeyUp, 'KeyUp');
+  MyForm.AddNewEvent(topBar, tbeOnClick, 'LeftClick');
+  
+  
   
   ytbBtn = MyForm.AddNewProButton(VSB,'ytbBtn','YouTube');
   clComponent.SetupComponent(ytbBtn,'{"Align" : "MostTop","Height":'+IntToStr((SearchPnl.Height/2)/6)+',"Width":'+IntToStr(SearchPnl.Width)+',"RoundWidth":10,"RoundHeight":10,"BackGroundColor":"#c2041a","TextColor":"FFFFFF","TextSize":20,"TextBold":"yes","TextVerticalAlign":"center","TextHorizontalAlign":"center","MarginTop":5}');
@@ -163,5 +267,8 @@ Var
   MyForm.AddNewEvent(MyForm,tbeOnVirtualKeyboardShown,'VirtualKeyboardShow'); 
   MyForm.AddNewEvent(MyForm,tbeOnVirtualKeyboardHidden,'VirtualKeyboardHidden'); 
   
+  if(Clomosy.PlatformIsMobile) 
   MyForm.Run;
+  else
+  MyForm.RunModal;
 }
